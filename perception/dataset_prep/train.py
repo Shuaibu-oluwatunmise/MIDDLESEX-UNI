@@ -9,17 +9,17 @@ from pathlib import Path
 def main():
     # === CONFIGURATION ===
     DATA_YAML = Path("YOLO_DATA_FSOCO/data.yaml")
-    MODEL_NAME = "yolov8n.pt"
+    MODEL_NAME = "yolov8s.pt"
     EPOCHS = 100
     IMG_SIZE = 640
     BATCH_SIZE = 32
     PROJECT_NAME = "runs/train"
-    RUN_NAME = "cone_detector_fsoco"
+    RUN_NAME = "cone_detector_s"  # Changed from fsoco to _s
     PATIENCE = 15
     
     # === DEVICE SELECTION ===
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"\n🚀 Training YOLOv8n for {EPOCHS} epochs on device: {device.upper()}")
+    print(f"\n🚀 Training YOLOv8s for {EPOCHS} epochs on device: {device.upper()}")  # Changed n to s
     
     # === FIX WINDOWS MULTIPROCESSING ===
     torch.multiprocessing.set_sharing_strategy("file_system")
