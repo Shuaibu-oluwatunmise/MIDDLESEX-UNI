@@ -1,0 +1,25 @@
+# Core dependencies for auto-annotation
+autodistill==0.1.29
+autodistill-grounding-dino==0.1.2
+roboflow==1.2.11
+
+# Computer vision and image processing
+opencv-python>=4.6.0
+Pillow>=7.1.2
+
+# Machine learning
+scikit-learn>=1.0.0
+
+# YOLOv8 training
+ultralytics>=8.0.0
+
+# Utilities
+numpy>=1.20.0
+PyYAML>=5.3.1
+tqdm>=4.60.0
+supervision>=0.20.0
+
+# Additional dependencies
+click>=8.0.0
+matplotlib>=3.6.0
+scipy>=1.10.0

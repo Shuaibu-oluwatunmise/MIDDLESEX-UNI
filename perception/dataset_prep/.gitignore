@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+venv/
+env/
+
+# Large Dataset Folders - REMOVE THESE
+fsoco_bounding_boxes_train/
+images/
+YOLO_DATA/
+YOLO_DATA_FSOCO/
+annotations_*/
+visualizations/
+
+# Reference repos (already publicly available)
+REFERENCES/
+
+# Temporary files
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
