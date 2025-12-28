@@ -1,0 +1,52 @@
+(yolo_env) oluwatunmise@Oluwatunmise:~/ros2_ws$ cd ~/ros2_ws
+(yolo_env) oluwatunmise@Oluwatunmise:~/ros2_ws$ source /opt/ros/jazzy/setup.bash
+(yolo_env) oluwatunmise@Oluwatunmise:~/ros2_ws$ source ~/yolo_env/bin/activate
+(yolo_env) oluwatunmise@Oluwatunmise:~/ros2_ws$ export PYTHONNOUSERSITE=1
+(yolo_env) oluwatunmise@Oluwatunmise:~/ros2_ws$ rm -rf build install log
+(yolo_env) oluwatunmise@Oluwatunmise:~/ros2_ws$ python3 -m colcon build --symlink-install
+Starting >>> cone_detector_node
+Finished <<< cone_detector_node [1.35s]
+
+Summary: 1 package finished [1.54s]
+(yolo_env) oluwatunmise@Oluwatunmise:~/ros2_ws$ source install/setup.bash
+(yolo_env) oluwatunmise@Oluwatunmise:~/ros2_ws$ ros2 run cone_detector_node detector
+[INFO] [1766928065.943758822] [cone_detector_node]: Loading model: /mnt/c/Users/shuai/FSAI-PIONEERS/MIDDLESEX-UNI/models/yolov8s/weights/best.pt
+[INFO] [1766928066.514754383] [cone_detector_node]: ✅ Cone Detector Node initialized!
+[INFO] [1766928066.515180132] [cone_detector_node]:    Model: YOLOv8s
+[INFO] [1766928066.515525012] [cone_detector_node]:    Confidence: 0.25
+[INFO] [1766928066.515864705] [cone_detector_node]:    Device: cpu
+
+
+
+
+in the venv
+# 1) Go to the workspace
+cd ~/ros2_ws
+
+# 2) Source ROS 2 Jazzy
+source /opt/ros/jazzy/setup.bash
+
+# 3) Activate your virtualenv (the one with numpy<2 + ultralytics)
+source ~/yolo_env/bin/activate
+
+# 4) Prevent Python from loading user-site packages (~/.local) which had numpy 2.2.6
+export PYTHONNOUSERSITE=1
+
+# (optional but you did it earlier) Make colcon use the venv python
+# export COLCON_PYTHON_EXECUTABLE=$(which python3)
+
+# 5) Clean previous build artifacts
+rm -rf build install log
+
+# 6) Build using the venv python so the generated entrypoints use the venv shebang
+python3 -m colcon build --symlink-install
+
+# 7) Source the workspace overlay
+source install/setup.bash
+
+# 8) Run the node
+ros2 run cone_detector_node detector
+
+
+run this though before build:
+pip install -U colcon-common-extensions

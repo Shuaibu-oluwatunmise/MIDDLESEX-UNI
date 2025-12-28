@@ -1,76 +1,116 @@
-# MIDDLESEX-UNI Perception Module
+# ROS2 Perception Pipeline
 
-## 📁 Directory Structure
+Formula Student AI - PIONEER Team  
+ROS2 Jazzy Implementation
 
-```
-perception/
-├── dataset_prep/              # Dataset preparation & training
-│   ├── scripts/               # Training and conversion scripts
-│   │   ├── convert_fsoco_to_yolo.py    # Convert FSOCO → YOLO format
-│   │   ├── train_model.py              # Train YOLOv8 models
-│   │   └── visualize_annotations.py    # Visualize dataset labels
-│   ├── yolov8n.pt            # YOLOv8 nano pretrained weights
-│   ├── yolov8s.pt            # YOLOv8 small pretrained weights
-│   ├── yolo11n.pt            # YOLO11 nano pretrained weights
-│   ├── requirements.txt       # Python dependencies
-│   └── .gitignore            # Ignore datasets/runs (archived separately)
-│
-├── python_pipeline/           # Standalone Python inference
-│   └── test_video.py         # Test model on video files
-│
-└── ros2_pipeline/             # ROS2 integration (future)
-    └── (coming soon)
-```
+## 🎯 Overview
 
-## 🎯 Usage
+Complete ROS2 perception pipeline for autonomous racing cone detection.
 
-### Training a Model
+## 📦 Packages
 
+### 1. `cone_detector_node`
+**YOLOv8-powered cone detection**
+- Subscribes: `/camera/image_raw` (sensor_msgs/Image)
+- Publishes: `/perception/cones` (vision_msgs/Detection2DArray)
+- Models: YOLOv8n (71.9% mAP50), YOLOv8s (73.8% mAP50)
+
+### 2. `video_publisher`
+**Test video publisher for development**
+- Publishes video frames to `/camera/image_raw`
+- Configurable FPS, looping
+- Used for testing without real camera
+
+### 3. `perception_bringup`
+**Launch files for easy startup**
+- `test_perception.launch.py` - Starts video publisher + detector
+
+## 🚀 Quick Start
+
+### Setup (First Time)
 ```bash
-cd perception/dataset_prep/scripts
-python train_model.py
+# 1. Activate Python environment
+source ~/yolo_env/bin/activate
+
+# 2. Source ROS2
+source /opt/ros/jazzy/setup.bash
+
+# 3. Build workspace
+cd ~/ros2_ws
+python3 -m colcon build --symlink-install
+
+# 4. Source workspace
+source install/setup.bash
 ```
 
-**Note:** Script expects:
-- Dataset at `../YOLO_DATA_FSOCO/`
-- Pretrained weights at `../yolov8s.pt`
-- Outputs to `../runs/train/`
+### Run Perception Pipeline
 
-### Testing on Video
-
+**One command launch:**
 ```bash
-cd perception/python_pipeline
-python test_video.py
+ros2 launch perception_bringup test_perception.launch.py
 ```
 
-**Note:** Script loads model from `../../models/yolov8s/weights/best.pt`
-
-### Converting FSOCO Dataset
-
+**Or run nodes individually:**
 ```bash
-cd perception/dataset_prep/scripts
-python convert_fsoco_to_yolo.py
+# Terminal 1 - Video Publisher
+ros2 run video_publisher publisher --ros-args \
+  -p video_path:=/mnt/c/Users/shuai/FSAI-PIONEERS/MIDDLESEX-UNI/perception/test_data/videos/fsai_chalmers.mp4
+
+# Terminal 2 - Cone Detector
+ros2 run cone_detector_node detector
 ```
 
-**Note:** Expects FSOCO dataset at `../fsoco_bounding_boxes_train/`
+## 📊 Performance
 
-## 📊 Current Model Performance
+**YOLOv8s Model:**
+- mAP50: 73.8%
+- mAP50-95: 54.1%
+- Inference: ~4.5ms per frame (CPU)
+- Training: 150 epochs on FSOCO dataset
 
-**YOLOv8s (best model):**
-- **mAP50:** 74.7%
-- **Precision:** 90.4%
-- **Recall:** 60.6%
-- **Inference:** 4.5ms (RTX 5080) / ~12-15ms (AGX Orin)
+**Detection Results:**
+- 25-35 cones detected per frame on test video
+- Real-time performance on Chalmers FSG 2024 footage
 
-Model weights saved in: `../../models/yolov8s/weights/best.pt`
+## 🗂️ Directory Structure
+```
+ros2_ws/
+├── src/
+│   ├── cone_detector_node/     # YOLO detection node
+│   ├── video_publisher/        # Test video publisher
+│   └── perception_bringup/     # Launch files
+├── build/                      # Build artifacts (gitignored)
+├── install/                    # Install artifacts (gitignored)
+└── log/                        # Logs (gitignored)
+```
 
-## 🗂️ Archived Training Runs
+## 🔧 Node Parameters
 
-Training runs are archived in `../../archive/archive_runs_YYYY-MM-DD/` to keep the repo clean while preserving training history.
+### cone_detector_node
+- `model_size`: 'n' or 's' (default: 's')
+- `confidence_threshold`: 0.0-1.0 (default: 0.25)
+- `device`: 'cpu' or 'cuda' (default: 'cpu')
 
-## 🚀 Next Steps
+### video_publisher
+- `video_path`: Full path to video file
+- `frame_rate`: Publishing rate in Hz (default: 30.0)
+- `loop`: Loop video when finished (default: True)
 
-1. ✅ Perception model trained (COMPLETE)
-2. 🔄 Coordinate transformation (NEXT)
-3. ⏳ SLAM integration
-4. ⏳ ROS2 pipeline development
+## 📝 Next Steps
+
+- [ ] Add cone visualization node (RViz markers)
+- [ ] Implement depth estimation (monocular)
+- [ ] Add coordinate transforms (camera → world)
+- [ ] Implement cone tracking with Kalman filters
+- [ ] Build SLAM/mapping system
+
+## 🏆 Competition
+
+**Target:** Formula Student AI 2026 (July)  
+**Track:** Full autonomous racing with cone detection
+
+---
+
+**Last Updated:** December 28, 2024  
+**ROS2 Version:** Jazzy Jalisco  
+**Platform:** Ubuntu 24.04 LTS (WSL2)

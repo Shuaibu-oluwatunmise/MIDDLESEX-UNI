@@ -9,6 +9,7 @@ dist/
 build/
 venv/
 env/
+yolo-env/
 
 # ========================================
 # LARGE DATASET FILES (DO NOT TRACK)
@@ -46,6 +47,20 @@ desktop.ini
 # LARGE VIDEO FILES (OPTIONAL)
 # ========================================
 # Uncomment if you don't want to track test videos
-# *.mp4
-# *.avi
-# *.mov
+*.mp4
+*.avi
+*.mov
+
+# ========================================
+# ROS2 BUILD ARTIFACTS (DO NOT TRACK)
+# ========================================
+perception/ros2_ws/build/
+perception/ros2_ws/install/
+perception/ros2_ws/log/
+perception/ros2_ws/yolo_env/
+
+# ROS2 Python cache
+*.pyc
+__pycache__/
+
+
