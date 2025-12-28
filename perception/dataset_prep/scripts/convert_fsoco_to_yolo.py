@@ -9,8 +9,9 @@ from tqdm import tqdm
 import random
 
 # Configuration
-FSOCO_ROOT = Path("fsoco_bounding_boxes_train")
-OUTPUT_DIR = Path("YOLO_DATA_FSOCO")
+# Paths relative to dataset_prep/ (parent of scripts/)
+FSOCO_ROOT = Path("../fsoco_bounding_boxes_train")
+OUTPUT_DIR = Path("../YOLO_DATA_FSOCO")
 
 # Class mapping from FSOCO to YOLO
 # Based on meta.json class definitions

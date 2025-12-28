@@ -8,8 +8,8 @@ print("=" * 70)
 print("🎥 Testing Cone Detector on Chalmers FSG 2024 Video")
 print("=" * 70)
 
-# Load trained model
-model = YOLO("runs/train/cone_detector_s/weights/best.pt")
+# Load trained model (from MIDDLESEX-UNI/models/)
+model = YOLO("../../models/yolov8s/weights/best.pt")
 
 # Run inference on video
 print("\n🚀 Running detection...")

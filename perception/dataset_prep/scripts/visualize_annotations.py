@@ -90,9 +90,9 @@ print("=" * 70)
 print("Visualizing FSOCO Cone Detection Annotations (ALL IMAGES)")
 print("=" * 70)
 
-data_folder = Path('YOLO_DATA_FSOCO')
+data_folder = Path('../YOLO_DATA_FSOCO')
 class_names = ['blue_cone', 'yellow_cone', 'orange_cone']
-output_folder = Path('visualizations/YOLO_DATA_FSOCO')
+output_folder = Path('../visualizations/YOLO_DATA_FSOCO')
 
 if not data_folder.exists():
     print(f"❌ YOLO_DATA_FSOCO not found!")

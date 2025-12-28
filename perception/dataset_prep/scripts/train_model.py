@@ -8,13 +8,14 @@ from pathlib import Path
 
 def main():
     # === CONFIGURATION ===
-    DATA_YAML = Path("YOLO_DATA_FSOCO/data.yaml")
-    MODEL_NAME = "yolov8s.pt"
+    # Paths relative to dataset_prep/ (parent of scripts/)
+    DATA_YAML = Path("../YOLO_DATA_FSOCO/data.yaml")
+    MODEL_NAME = "../yolov8s.pt"
     EPOCHS = 100
     IMG_SIZE = 640
     BATCH_SIZE = 32
-    PROJECT_NAME = "runs/train"
-    RUN_NAME = "cone_detector_s"  # Changed from fsoco to _s
+    PROJECT_NAME = "../runs/train"
+    RUN_NAME = "cone_detector_s"
     PATIENCE = 15
     
     # === DEVICE SELECTION ===

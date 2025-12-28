@@ -1,0 +1,51 @@
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+venv/
+env/
+
+# ========================================
+# LARGE DATASET FILES (DO NOT TRACK)
+# ========================================
+# These are too big for GitHub - download separately
+perception/dataset_prep/fsoco_bounding_boxes_train/
+perception/dataset_prep/YOLO_DATA/
+perception/dataset_prep/YOLO_DATA_FSOCO/
+perception/dataset_prep/annotations_*/
+perception/dataset_prep/visualizations/
+
+# ========================================
+# ARCHIVED TRAINING RUNS (DO NOT TRACK)
+# ========================================
+# Old runs archived locally to save space
+archive/
+
+# ========================================
+# TEMPORARY FILES
+# ========================================
+*.log
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================================
+# IDE FILES
+# ========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ========================================
+# LARGE VIDEO FILES (OPTIONAL)
+# ========================================
+# Uncomment if you don't want to track test videos
+# *.mp4
+# *.avi
+# *.mov
