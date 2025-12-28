@@ -2,7 +2,7 @@
 <robot name="eufs" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
 
-  <xacro:include filename="$(find eufs_description)/urdf/bases/eufs_base.gazebo.xacro" />
+  <xacro:include filename="/mnt/c/Users/shuai/FSAI-PIONEERS/MIDDLESEX-UNI/description/urdf/bases/eufs_base.gazebo.xacro" />
 
   <xacro:macro name="eufs_base" params="name publish_bf hq">
 
@@ -50,19 +50,19 @@
        <origin xyz="0 0 0" rpy="0 0 0" />
        <xacro:if value="${hq}">
        <geometry>
-	     <mesh filename="package://eufs_description/meshes/chassis.dae"/>
+	     <mesh filename="file:///mnt/c/Users/shuai/FSAI-PIONEERS/MIDDLESEX-UNI/description/meshes/chassis.dae"/>
        </geometry>
        </xacro:if>
        <xacro:unless value="${hq}">
        <geometry>
-	     <mesh filename="package://eufs_description/meshes/chassis.dae"/>
+	     <mesh filename="file:///mnt/c/Users/shuai/FSAI-PIONEERS/MIDDLESEX-UNI/description/meshes/chassis.dae"/>
        </geometry>
        </xacro:unless>
     </visual>
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
-         <mesh filename="package://eufs_description/meshes/chassis_collision.dae"/>
+         <mesh filename="file:///mnt/c/Users/shuai/FSAI-PIONEERS/MIDDLESEX-UNI/description/meshes/chassis_collision.dae"/>
        </geometry>
     </collision>
   </link>

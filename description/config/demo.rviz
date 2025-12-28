@@ -1,0 +1,39 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Views
+    Name: Views
+
+Visualization Manager:
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Plane: XY
+      
+    - Class: rviz_default_plugins/RobotModel
+      Name: ADS-DV Car
+      Robot Description: robot_description
+      Visual Enabled: true
+      
+    - Class: rviz_default_plugins/MarkerArray
+      Name: Cone Markers
+      Topic: /demo/cone_markers
+      
+    - Class: rviz_default_plugins/Axes
+      Name: Camera Frame
+      Reference Frame: camera
+      Length: 0.5
+      
+  Global Options:
+    Fixed Frame: camera
+    
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 15.0
+      Focal Point:
+        X: 5.0
+        Y: 0.0
+        Z: 0.0
+      Pitch: 0.5
+      Yaw: 3.14

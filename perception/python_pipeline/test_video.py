@@ -37,22 +37,29 @@ def test_video(model_size="s", video_name="fsai_chalmers.mp4", conf=0.25):
     
     # Run inference
     print("\n🚀 Running detection...")
+    
+    # Output directory
+    output_dir = PROJECT_ROOT / "perception" / "test_data" / "results"
+    
     results = model.predict(
         source=str(VIDEO_PATH),
         save=True,
+        project=str(output_dir),
+        name="cone_detection",
+        exist_ok=True,
         conf=conf,
         iou=0.45,
         show_labels=True,
         show_conf=True,
         line_width=2,
-        device=0,
+        device='cpu',  # Use CPU (no GPU on Windows)
         vid_stride=1,
     )
     
     print("\n" + "=" * 70)
     print("✅ DETECTION COMPLETE!")
     print("=" * 70)
-    print(f"📁 Output: runs/detect/predict/")
+    print(f"📁 Output: {output_dir / 'cone_detection'}")
     print("=" * 70)
 
 if __name__ == "__main__":
