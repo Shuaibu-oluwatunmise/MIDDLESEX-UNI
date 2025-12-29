@@ -25,7 +25,7 @@ perception/dataset_prep/visualizations/
 # ARCHIVED TRAINING RUNS (DO NOT TRACK)
 # ========================================
 # Old runs archived locally to save space
-archive/
+# archive/
 
 # ========================================
 # TEMPORARY FILES
@@ -58,6 +58,13 @@ perception/ros2_ws/build/
 perception/ros2_ws/install/
 perception/ros2_ws/log/
 perception/ros2_ws/yolo_env/
+
+# Ignore artifacts in the archive too
+archive/**/build/
+archive/**/install/
+archive/**/log/
+archive/**/yolo_env/
+archive/**/.colcon_install_layout
 
 # ROS2 Python cache
 *.pyc
