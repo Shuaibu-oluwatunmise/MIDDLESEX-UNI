@@ -11,13 +11,13 @@
 ---
 
 ## 📋 Table of Contents
-- [Overview](#overview)
-- [System Architecture](#system-architecture)
-- [Core Modules](#core-modules)
-- [Performance Metrics](#performance-metrics)
-- [The Archive Strategy](#the-archive-strategy)
-- [Installation](#installation)
-- [Roadmap](#roadmap)
+- [Overview](#-overview)
+- [System Architecture](#-system-architecture)
+- [Core Modules](#-core-modules)
+- [Performance Metrics](#-performance-metrics)
+- [The Archive Strategy](#-the-archive-strategy)
+- [Installation](#-installation)
+- [Roadmap](#-roadmap)
 
 ---
 
