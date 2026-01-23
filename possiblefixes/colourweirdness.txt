@@ -1,0 +1,102 @@
+Ah yeah, this sounds like a **color space conversion issue** in your ROS2 code, not the model itself. This is a super common problem when working with OpenCV and ROS.
+
+## The Problem: BGR vs RGB
+
+**OpenCV uses BGR** (Blue-Green-Red)
+**ROS sensor_msgs/Image typically expects RGB** (Red-Green-Blue)
+**But it depends on the encoding you specify!**
+
+When you convert between cv2 images and ROS messages, if you get the encoding wrong, the Red and Blue channels get swapped, which causes exactly what you're describing:
+- Sky looks weird (blue → red)
+- Yellow cones look orange (yellow shifted)
+- Blue cones look wrong
+- Everything has a weird color cast
+
+## Let's Debug Your Node 2 Code
+
+Show me your image callback function in Node 2. Specifically:
+
+1. How are you converting the ROS Image message to OpenCV format?
+2. What encoding are you specifying?
+3. How are you passing the image to YOLO?
+
+It probably looks something like this:
+
+```python
+def image_callback(self, msg):
+    # This line - what encoding did you use?
+    frame = self.cv_bridge.imgmsg_to_cv2(msg, desired_encoding='???')
+    
+    # Then YOLO inference
+    results = self.model(frame)
+```
+
+## Common Mistakes & Fixes
+
+**Mistake 1: Wrong encoding in conversion**
+```python
+# WRONG - if your publisher sends BGR but you convert as RGB
+frame = self.cv_bridge.imgmsg_to_cv2(msg, desired_encoding='rgb8')
+
+# CORRECT - match what the publisher actually sends
+frame = self.cv_bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+```
+
+**Mistake 2: Publisher encoding mismatch**
+
+In your Node 1 (camera publisher), what encoding are you using when you publish?
+
+```python
+# In Node 1 - what's this line?
+msg = self.cv_bridge.cv2_to_imgmsg(frame, encoding='???')
+```
+
+If Node 1 publishes as `'bgr8'` but Node 2 reads as `'rgb8'`, colors get swapped.
+
+## Quick Test
+
+Try this in your Node 2 callback:
+
+```python
+def image_callback(self, msg):
+    # Try bgr8 first
+    frame = self.cv_bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+    
+    # If colors still weird, try converting BGR to RGB
+    # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    
+    results = self.model(frame)
+```
+
+Or:
+
+```python
+def image_callback(self, msg):
+    # Try rgb8 instead
+    frame = self.cv_bridge.imgmsg_to_cv2(msg, desired_encoding='rgb8')
+    
+    results = self.model(frame)
+```
+
+## What To Check
+
+1. **Node 1 encoding** - when you read from video and publish, what encoding?
+2. **Node 2 encoding** - when you subscribe and convert, what encoding?
+3. **YOLO expectation** - does your YOLO model expect RGB or BGR input?
+
+Most YOLO models trained with Ultralytics expect **BGR** (because they use OpenCV internally), but this can vary.
+
+## Another Possible Issue: Visualization
+
+If the *detection* works fine but the *display/visualization* looks weird, the problem might be in how you're showing the results, not the inference itself.
+
+Are the detections actually working correctly (finding the right cones) but just looking weird when you visualize? Or are the detections themselves wrong (finding wrong cones, missing cones)?
+
+---
+
+**Can you show me:**
+1. Your Node 1 code (camera publisher) - specifically the cv2_to_imgmsg line
+2. Your Node 2 code (detector) - specifically the imgmsg_to_cv2 line
+3. Are detections working correctly despite weird colors? Or are detections also affected?
+
+Let's fix this!
